@@ -61,7 +61,7 @@ fn compileAst(c: *Compiler, ast: *Ast) Error!*Program {
     frag = c.cat(frag, try c.cap(1));
     _ = c.cat(frag, try c.state(.match));
 
-    if (builtin.mode == .Debug) {
+    if (builtin.mode == .debug) {
         assert(c.matcher_count == countMatcherStates(c.states.items));
     }
 
@@ -674,11 +674,11 @@ const PatchList = struct {
         }
 
         fn toId(self: Ptr) StateId {
-            return (@as(StateId, self.payload) << 2) | @intFromEnum(self.target);
+            return (@as(StateId, self.payload) << 2) | @backingInt(self.target);
         }
 
         fn fromId(id: StateId) Ptr {
-            return .{ .payload = @truncate(id >> 2), .target = @enumFromInt(id & 0b11) };
+            return .{ .payload = @truncate(id >> 2), .target = @fromBackingInt(@intCast(id & 0b11)) };
         }
 
         fn isZero(self: Ptr) bool {
