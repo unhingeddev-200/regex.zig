@@ -42,10 +42,10 @@ pub fn build(b: *std.Build) void {
         .linkage = .static,
     });
 
-    const run_demo = b.addRunArtifact(demo_exe);
-    if (b.args) |args| run_demo.addArgs(args);
-    const run_step = b.step("run", "Run regex demo");
-    run_step.dependOn(&run_demo.step);
+    // const run_demo = b.addRunArtifact(demo_exe);
+    // if (b.args) |args| run_demo.addArgs(args);
+    // const run_step = b.step("run", "Run regex demo");
+    // run_step.dependOn(&run_demo.step);
 
     // Build-on-save check step.
     const check = b.step("check", "Compile demo and library module");
@@ -87,7 +87,7 @@ pub fn build(b: *std.Build) void {
     });
     suite_tests.root_module.addImport("export_test", export_test_mod);
     const run_suite_tests = b.addRunArtifact(suite_tests);
-    if (b.args) |args| run_suite_tests.addArgs(args);
+    // if (b.args) |args| run_suite_tests.addArgs(args);
 
     const test_unit_step = b.step("test-unit", "Run unit tests");
     test_unit_step.dependOn(&run_unit_tests.step);
